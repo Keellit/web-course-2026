@@ -5,7 +5,7 @@
 
 ## Лабораторные работы
 
-- [task0](task0/)
+- task0
 - task1
 - task2
 - task3
