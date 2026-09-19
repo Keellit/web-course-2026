@@ -10,15 +10,21 @@
     <header class="header">
         <a class="logo" href="#">NOCTURNE<span>.</span></a>
 
-        <input class="menu-toggle" type="checkbox" id="menu-toggle">
+        <details class="mobile-menu">
+            <summary class="menu-button" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </summary>
 
-        <label class="menu" for="menu-toggle" aria-label="Меню">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
+            <nav class="mobile-nav">
+                <a href="#about">О нас</a>
+                <a href="#spaces">Зоны</a>
+                <a href="#contact">Контакты</a>
+            </nav>
+        </details>
 
-        <nav class="nav">
+        <nav class="desktop-nav">
             <a href="#about">О нас</a>
             <a href="#spaces">Зоны</a>
             <a href="#contact">Контакты</a>

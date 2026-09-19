@@ -29,7 +29,7 @@ a {
 
 .header {
     min-height: 72px;
-    padding: 16px 20px;
+    padding: 12px 20px;
     border-bottom: 1px solid var(--line);
     background: var(--bg);
     display: flex;
@@ -50,66 +50,79 @@ a {
     color: var(--accent);
 }
 
-.menu-toggle {
+.desktop-nav {
     display: none;
 }
 
-.menu {
+.mobile-menu {
+    position: relative;
+}
+
+.mobile-menu summary {
+    list-style: none;
+}
+
+.mobile-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.menu-button {
     width: 48px;
     height: 48px;
     padding: 11px;
     border: 1px solid var(--line);
     background: var(--panel);
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    cursor: pointer;
 }
 
-.menu span {
+.menu-button span {
     width: 100%;
     height: 2px;
     background: var(--text);
     transition: transform 0.2s, opacity 0.2s;
 }
 
-.nav {
-    display: none;
-}
-
-.menu-toggle:checked ~ .nav {
-    display: flex;
-    position: absolute;
-    top: 72px;
-    left: 0;
-    right: 0;
-    padding: 22px 20px;
-    border-bottom: 1px solid var(--line);
-    background: var(--panel);
-    flex-direction: column;
-    gap: 18px;
-}
-
-.menu-toggle:checked + .menu span:nth-child(1) {
+.mobile-menu[open] .menu-button span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
 }
 
-.menu-toggle:checked + .menu span:nth-child(2) {
+.mobile-menu[open] .menu-button span:nth-child(2) {
     opacity: 0;
 }
 
-.menu-toggle:checked + .menu span:nth-child(3) {
+.mobile-menu[open] .menu-button span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-.nav a {
-    color: var(--muted);
-    transition: color 0.2s;
+.mobile-nav {
+    min-width: 210px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    position: absolute;
+    top: 56px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.nav a:hover {
+.mobile-nav a {
+    min-height: 44px;
+    padding: 12px 14px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    transition: color 0.2s, background 0.2s;
+}
+
+.mobile-nav a:hover {
     color: var(--accent);
+    background: #20202a;
 }
 
 .page {
@@ -385,21 +398,23 @@ textarea:focus {
         padding-right: max(64px, calc((100vw - 1180px) / 2));
     }
 
-    .menu,
-    .menu-toggle {
+    .mobile-menu {
         display: none;
     }
 
-    .nav,
-    .menu-toggle:checked ~ .nav {
+    .desktop-nav {
         display: flex;
-        position: static;
-        padding: 0;
-        border: 0;
-        background: transparent;
-        flex-direction: row;
         align-items: center;
         gap: 28px;
+    }
+
+    .desktop-nav a {
+        color: var(--muted);
+        transition: color 0.2s;
+    }
+
+    .desktop-nav a:hover {
+        color: var(--accent);
     }
 
     .hero {
