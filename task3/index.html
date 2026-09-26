@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-list</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="todo">
+        <h1>Todo-list</h1>
+
+        <form id="todo-form" class="todo-form">
+            <input
+                id="todo-input"
+                type="text"
+                placeholder="Введите задачу"
+                autocomplete="off"
+                aria-label="Новая задача"
+            >
+            <button type="submit">Добавить</button>
+        </form>
+
+        <p id="message" class="message" aria-live="polite"></p>
+
+        <section class="filters" aria-label="Фильтры задач">
+            <button type="button" class="filter active" data-filter="all">Все</button>
+            <button type="button" class="filter" data-filter="active">Активные</button>
+            <button type="button" class="filter" data-filter="completed">Завершённые</button>
+        </section>
+
+        <p id="stats" class="stats">Осталось: 0, Выполнено: 0</p>
+
+        <ul id="todo-list" class="todo-list"></ul>
+    </main>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
