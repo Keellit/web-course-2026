@@ -3,42 +3,61 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0e1522">
-  <title>Simon — Лабораторная №5</title>
+  <meta name="theme-color" content="#f8f5ec">
+  <title>Simon Says — Лабораторная №5</title>
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./script.js"></script>
 </head>
 <body>
-  <main class="layout">
-    <header class="hero">
-      <span class="eyebrow">ЛАБОРАТОРНАЯ РАБОТА №5 · JAVASCRIPT</span>
-      <h1>SIMON<span>.</span></h1>
-      <p>Запомните последовательность. Повторите её. Пройдите как можно дальше.</p>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="#game" aria-label="К игре Simon Says">
+        <span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>PLAY<span class="brand-star">★</span>LAB</span>
+      </a>
+      <span class="course-label">JS / ЛАБОРАТОРНАЯ 05</span>
     </header>
 
-    <section class="game" aria-label="Игра Симон говорит">
-      <div class="game-top">
-        <div class="level"><span>Уровень</span> <strong id="level">0</strong></div>
-        <span id="progress" class="progress">0 пройдено</span>
-      </div>
-      <div id="board" class="board" aria-label="Четыре цветные игровые кнопки">
-        <button class="pad pad--green" data-pad="0" type="button" aria-label="Зелёный" disabled></button>
-        <button class="pad pad--red" data-pad="1" type="button" aria-label="Красный" disabled></button>
-        <button class="pad pad--yellow" data-pad="2" type="button" aria-label="Жёлтый" disabled></button>
-        <button class="pad pad--blue" data-pad="3" type="button" aria-label="Синий" disabled></button>
-      </div>
-      <p id="status" class="status" role="status" aria-live="polite">Нажмите «Старт», чтобы начать.</p>
-      <div class="controls">
-        <button id="start" class="start" type="button">Старт</button>
-        <label class="sound"><input type="checkbox" id="sound"> <span>Звук</span></label>
-      </div>
-    </section>
+    <main class="layout">
+      <section class="intro" aria-labelledby="page-title">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> ИГРА НА ПАМЯТЬ / 001</span>
+        <h1 id="page-title">SIMON<br><span>SAYS<span class="title-dot">.</span></span></h1>
+        <p class="lead">Смотри. Запоминай. Повторяй. <strong>Сколько цветов ты удержишь в памяти?</strong></p>
+        <div class="intro-divider" aria-hidden="true"><span>↘</span> ТВОЙ ВЫЗОВ НАЧИНАЕТСЯ ЗДЕСЬ</div>
+        <aside class="rules" aria-labelledby="rules-title">
+          <h2 id="rules-title">Как играть <span>↗</span></h2>
+          <ol>
+            <li><span class="rule-number">01</span><span>Нажми <strong>«Старт»</strong> и запомни подсвеченный цвет.</span></li>
+            <li><span class="rule-number">02</span><span>Повтори последовательность в том же порядке.</span></li>
+            <li><span class="rule-number">03</span><span>Каждый новый раунд добавляет ещё один цвет. Ошибка завершает игру.</span></li>
+          </ol>
+        </aside>
+        <p class="footnote">НИКАКИХ ПОДСКАЗОК. ТОЛЬКО ТВОЯ ПАМЯТЬ.</p>
+      </section>
 
-    <aside class="rules" aria-labelledby="rules-heading">
-      <h2 id="rules-heading">Правила</h2>
-      <p>Нажмите «Старт». Компьютер подсветит один цвет. Повторите его нажатием. На каждом уровне добавляется новый цвет, после чего показывается <strong>вся</strong> последовательность с самого начала.</p>
-      <p>Во время показа цвета недоступны. Ошибка заканчивает игру; кнопка «Начать заново» запускает новую без перезагрузки страницы.</p>
-    </aside>
-  </main>
+      <section id="game" class="game" aria-label="Игра Симон говорит">
+        <div class="game-top">
+          <div class="level"><span class="meta-label">ТЕКУЩИЙ УРОВЕНЬ</span><strong id="level">0</strong></div>
+          <div class="progress-wrap"><span class="progress-label">ПРОГРЕСС</span><span id="progress" class="progress">0 пройдено</span></div>
+        </div>
+
+        <div id="board" class="board" aria-label="Четыре цветные игровые кнопки">
+          <button class="pad pad--green" data-pad="0" type="button" aria-label="Зелёный" disabled><span class="pad-code">01 / GREEN</span><span class="pad-symbol" aria-hidden="true">●</span></button>
+          <button class="pad pad--red" data-pad="1" type="button" aria-label="Красный" disabled><span class="pad-code">02 / RED</span><span class="pad-symbol" aria-hidden="true">✳</span></button>
+          <button class="pad pad--yellow" data-pad="2" type="button" aria-label="Жёлтый" disabled><span class="pad-code">03 / YELLOW</span><span class="pad-symbol" aria-hidden="true">✦</span></button>
+          <button class="pad pad--blue" data-pad="3" type="button" aria-label="Синий" disabled><span class="pad-code">04 / BLUE</span><span class="pad-symbol" aria-hidden="true">◆</span></button>
+        </div>
+
+        <p id="status" class="status" role="status" aria-live="polite">Нажмите «Старт», чтобы начать.</p>
+
+        <div class="controls">
+          <button id="start" class="start" type="button">Старт</button>
+          <label class="sound"><input type="checkbox" id="sound"><span class="sound-knob" aria-hidden="true"></span><span>Звук</span></label>
+        </div>
+        <p class="game-caption">SIMON SAYS <span aria-hidden="true">✳</span> FOCUS MODE ON</p>
+      </section>
+    </main>
+    <footer class="footer"><span>PLAYLAB / 2026</span><span>ТРЕНИРУЙ ПАМЯТЬ. ИГРАЙ ЧЕСТНО.</span></footer>
+  </div>
 </body>
 </html>
