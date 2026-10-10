@@ -1,0 +1,46 @@
+:root { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #e7edf6; background: #0e1522; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at 50% 6%, #1e3249, transparent 53%), #0e1522; }
+button, input { font: inherit; }
+.layout { width: min(100% - 32px, 690px); margin: 0 auto; padding: 48px 0 70px; }
+.hero { text-align: center; margin-bottom: 30px; }
+.eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .17em; color: #91a8be; }
+h1 { margin: 10px 0 3px; font-size: clamp(65px, 12vw, 90px); line-height: 1; letter-spacing: -.09em; }
+h1 span { color: #41d8a1; }
+.hero p { font-size: 15px; line-height: 1.55; color: #a8b8cb; margin: 15px 0; }
+.game { max-width: 548px; margin: 0 auto; padding: 24px 30px 30px; border: 1px solid #31435b; border-radius: 25px; background: #172236; box-shadow: 0 22px 65px #050b1680; }
+.game-top { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin: 0 3px 22px; }
+.level { display: flex; align-items: baseline; gap: 12px; }
+.level span { color: #a9b9cc; font-size: 14px; font-weight: 600; }
+.level strong { font-size: 33px; font-variant-numeric: tabular-nums; }
+.progress { background: #283950; border-radius: 30px; padding: 8px 12px; font-size: 12px; font-weight: 700; color: #c4d3e4; }
+.board { width: min(100%, 402px); margin: 0 auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+.pad { aspect-ratio: 1; min-width: 0; border: 4px solid #172236; opacity: .72; cursor: pointer; box-shadow: inset 0 -14px 23px #0003, 0 7px 0 #050c18; transition: filter .12s ease, opacity .12s ease, transform .12s ease, box-shadow .12s ease; }
+.pad:disabled { cursor: not-allowed; }
+.pad:focus-visible { outline: 3px solid white; outline-offset: 4px; }
+.pad:not(:disabled):hover { opacity: .95; }
+.pad--green { background: #12bd78; border-radius: 100% 13px 13px 13px; }
+.pad--red { background: #ed4d67; border-radius: 13px 100% 13px 13px; }
+.pad--yellow { background: #f4c84f; border-radius: 13px 13px 13px 100%; }
+.pad--blue { background: #498ef4; border-radius: 13px 13px 100% 13px; }
+.pad.is-lit, .pad.is-tapped { filter: brightness(1.65) saturate(1.3); opacity: 1; transform: scale(1.035); box-shadow: inset 0 0 36px #fff6, 0 0 26px currentColor; }
+.pad--green.is-lit, .pad--green.is-tapped { color: #12bd78; }
+.pad--red.is-lit, .pad--red.is-tapped { color: #ed4d67; }
+.pad--yellow.is-lit, .pad--yellow.is-tapped { color: #f4c84f; }
+.pad--blue.is-lit, .pad--blue.is-tapped { color: #498ef4; }
+.pad.is-tapped { animation: tap .23s ease-out; }
+@keyframes tap { 0% { transform: scale(1.035); } 100% { transform: scale(1); } }
+.status { margin: 25px 0 18px; min-height: 50px; padding: 14px; border-radius: 11px; text-align: center; line-height: 1.45; color: #c4d9ed; background: #24344b; }
+.status--lost { color: #ffcbc8; background: #522b39; }
+.controls { display: flex; gap: 18px; align-items: center; justify-content: center; flex-wrap: wrap; }
+.start { background: #d4f593; border: 0; border-radius: 11px; padding: 14px 30px; min-height: 49px; font-weight: 800; color: #1b321a; cursor: pointer; transition: background .14s ease; }
+.start:hover { background: #e6ffb1; }
+.start:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.sound { display: inline-flex; align-items: center; gap: 8px; color: #c5d5e5; cursor: pointer; font-size: 14px; }
+.sound input { width: 20px; height: 20px; accent-color: #b9e784; }
+.rules { max-width: 548px; margin: 28px auto 0; padding: 0 6px; line-height: 1.65; color: #a7b9ca; }
+.rules h2 { margin: 0 0 11px; font-size: 20px; color: #e6eef8; }
+.rules p { margin: 0 0 11px; }
+.rules strong { color: #e9f3ff; }
+@media (max-width: 480px) { .layout { padding-top: 30px; } .game { padding: 17px 17px 24px; border-radius: 20px; } .board { gap: 9px; } .pad { border-width: 2px; } }
+@media (prefers-reduced-motion: reduce) { .pad, .start { transition: none; } .pad.is-tapped { animation: none; } }
