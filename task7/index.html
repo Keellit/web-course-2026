@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Лента постов — Лабораторная №7</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="label">JavaScript · Лабораторная №7</p>
+      <h1>Лента постов</h1>
+      <p class="intro">Посты загружаются автоматически при прокрутке страницы.</p>
+    </header>
+
+    <label for="search">Поиск по заголовку</label>
+    <input id="search" type="search" placeholder="Введите часть заголовка" autocomplete="off">
+    <p id="counter" class="counter">Показано: 0 из 0 загруженных</p>
+
+    <section id="posts" class="posts" aria-label="Список постов"></section>
+    <p id="empty" class="empty" hidden>Среди загруженных постов совпадений нет.</p>
+    <footer class="footer">
+      <p id="status" role="status" aria-live="polite">Загрузка…</p>
+      <button id="retry" type="button" hidden>Повторить загрузку</button>
+    </footer>
+  </main>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
