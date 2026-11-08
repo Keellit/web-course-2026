@@ -1,57 +1,46 @@
-import { getPosts } from './api.js';
-import { renderPosts, showStatus } from './ui.js';
-
-const LIMIT = 10;
-const TOTAL = 100;
-const posts = [];
-const search = document.querySelector('#search');
-const retry = document.querySelector('#retry');
-let query = '';
-let loading = false;
-let finished = false;
-let failed = false;
-let timer;
-
-function nearBottom() {
-  return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 200;
-}
+import { fetchPosts } from './api.js';
+import { state, PAGE_SIZE, addPosts } from './store.js';
+import { render } from './ui.js';
 
 async function loadMore() {
-  if (loading || finished || failed) return;
-  loading = true;
-  showStatus('Загрузка…');
+  if (state.loading || state.finished) return;
+
+  state.loading = true;
+  state.error = false;
+  render();
 
   try {
-    const batch = await getPosts(posts.length, LIMIT);
-    posts.push(...batch);
-    finished = batch.length < LIMIT || posts.length >= TOTAL;
-    renderPosts(posts, query);
-    showStatus(finished ? 'Больше постов нет' : '');
+    const posts = await fetchPosts(state.posts.length, PAGE_SIZE);
+    addPosts(posts);
   } catch (error) {
-    failed = true;
-    showStatus(`${error.message}. Проверьте подключение и повторите попытку.`, true);
+    state.error = true;
   } finally {
-    loading = false;
-    if (!query && !failed && !finished && nearBottom()) loadMore();
+    state.loading = false;
+    render();
   }
 }
 
-window.addEventListener('scroll', () => {
-  if (nearBottom()) loadMore();
-}, { passive: true });
+let previousScrollY = window.scrollY;
+function onScroll() {
+  const scrollingDown = window.scrollY > previousScrollY;
+  previousScrollY = window.scrollY;
+  if (!scrollingDown || state.error) return;
 
-search.addEventListener('input', () => {
-  clearTimeout(timer);
-  timer = setTimeout(() => {
-    query = search.value.trim().toLowerCase();
-    renderPosts(posts, query);
-    if (!query && nearBottom()) loadMore();
+  const remaining = document.documentElement.scrollHeight - window.innerHeight - window.scrollY;
+  if (remaining < 200) loadMore();
+}
+
+let searchTimer;
+document.querySelector('#search').addEventListener('input', event => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    state.query = event.target.value.trim();
+    render();
   }, 300);
 });
 
-retry.addEventListener('click', () => {
-  failed = false;
-  loadMore();
-});
+document.querySelector('#retry-button').addEventListener('click', loadMore);
+document.querySelector('#load-button').addEventListener('click', loadMore);
+window.addEventListener('scroll', onScroll, { passive: true });
 
 loadMore();
