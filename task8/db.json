@@ -1,0 +1,24 @@
+{
+  "categories": [
+    { "id": 1, "name": "Продукты", "type": "expense" },
+    { "id": 2, "name": "Транспорт", "type": "expense" },
+    { "id": 3, "name": "Кафе и рестораны", "type": "expense" },
+    { "id": 4, "name": "Покупки", "type": "expense" },
+    { "id": 5, "name": "Развлечения", "type": "expense" },
+    { "id": 6, "name": "Зарплата", "type": "income" },
+    { "id": 7, "name": "Подработка", "type": "income" },
+    { "id": 8, "name": "Другие доходы", "type": "income" }
+  ],
+  "transactions": [
+    { "id": 1, "type": "income", "amount": 2850, "categoryId": 6, "date": "2026-11-01", "comment": "Зарплата за октябрь" },
+    { "id": 2, "type": "expense", "amount": 82.40, "categoryId": 1, "date": "2026-11-02", "comment": "Покупки на неделю" },
+    { "id": 3, "type": "expense", "amount": 24, "categoryId": 2, "date": "2026-11-02", "comment": "Проездной" },
+    { "id": 4, "type": "income", "amount": 420, "categoryId": 7, "date": "2026-11-03", "comment": "Небольшой проект" },
+    { "id": 5, "type": "expense", "amount": 36.50, "categoryId": 3, "date": "2026-11-04", "comment": "Кофе и обед" },
+    { "id": 6, "type": "expense", "amount": 129.90, "categoryId": 4, "date": "2026-11-05", "comment": "Книга и аксессуары" },
+    { "id": 7, "type": "expense", "amount": 48, "categoryId": 5, "date": "2026-11-06", "comment": "Билеты в кино" },
+    { "id": 8, "type": "income", "amount": 75, "categoryId": 8, "date": "2026-11-06", "comment": "Возврат долга" },
+    { "id": 9, "type": "expense", "amount": 55.20, "categoryId": 1, "date": "2026-11-07", "comment": "Продукты домой" },
+    { "id": 10, "type": "expense", "amount": 18.70, "categoryId": 3, "date": "2026-11-08", "comment": "Завтрак" }
+  ]
+}
