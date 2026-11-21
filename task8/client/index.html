@@ -7,7 +7,7 @@
   <meta name="description" content="Saldo — простой учёт личных доходов и расходов.">
   <title>saldo. — личные финансы</title>
   <link rel="stylesheet" href="style.css">
-  <script type="module" src="script.js"></script>
+  <script type="module" src="main.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -40,19 +40,19 @@
         <article class="stat-card stat-main">
           <div class="stat-heading"><span>Текущий баланс</span><span class="stat-icon">↗</span></div>
           <p class="stat-value" id="balance">0,00 BYN</p>
-          <p class="stat-note"><span class="small-square"></span> Разница доходов и расходов</p>
+          <p class="stat-note"><span class="small-square"></span> Разница по выбранным фильтрам</p>
           <span class="stat-watermark" aria-hidden="true">↗</span>
         </article>
         <article class="stat-card stat-income">
           <div class="stat-heading"><span>Всего доходов</span><span class="stat-icon">＋</span></div>
           <p class="stat-value" id="income">0,00 BYN</p>
-          <p class="stat-note">Все поступления</p>
+          <p class="stat-note">По выбранным фильтрам</p>
           <div class="stat-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         </article>
         <article class="stat-card stat-expense">
           <div class="stat-heading"><span>Всего расходов</span><span class="stat-icon">−</span></div>
           <p class="stat-value" id="expense">0,00 BYN</p>
-          <p class="stat-note">Все списания</p>
+          <p class="stat-note">По выбранным фильтрам</p>
           <div class="stat-rings" aria-hidden="true"><i></i><i></i></div>
         </article>
       </div>
@@ -109,6 +109,25 @@
             <button id="cancel-button" type="button" class="cancel-button" hidden>Отменить редактирование</button>
           </div>
         </form>
+
+        <section class="category-editor" aria-labelledby="category-title">
+          <h3 id="category-title">Своя категория</h3>
+          <p>Добавьте категорию доходов или расходов.</p>
+          <form id="category-form">
+            <div class="field">
+              <label for="category-name" class="field-label">Название</label>
+              <input id="category-name" name="name" maxlength="60" placeholder="Например, Книги" required>
+            </div>
+            <div class="field">
+              <label for="category-type" class="field-label">Тип категории</label>
+              <select id="category-type" name="type">
+                <option value="expense">Расход</option>
+                <option value="income">Доход</option>
+              </select>
+            </div>
+            <button id="category-submit-button" class="cancel-button category-button" type="submit">＋ Добавить категорию</button>
+          </form>
+        </section>
       </section>
 
       <section class="panel transactions-panel" id="transactions" aria-labelledby="transactions-title">
@@ -120,6 +139,34 @@
           </div>
           <span class="count-badge" id="transaction-count">Операций: 0</span>
         </div>
+        <form id="filters-form" class="filters-form" aria-label="Фильтры операций">
+          <div class="filter-grid">
+            <div class="field">
+              <label for="filter-type" class="field-label">Тип</label>
+              <select name="type" id="filter-type">
+                <option value="">Все типы</option>
+                <option value="income">Доходы</option>
+                <option value="expense">Расходы</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filter-category" class="field-label">Категория</label>
+              <select name="category_id" id="filter-category"><option value="">Все категории</option></select>
+            </div>
+            <div class="field">
+              <label for="filter-from" class="field-label">С даты</label>
+              <input type="date" name="from" id="filter-from">
+            </div>
+            <div class="field">
+              <label for="filter-to" class="field-label">По дату</label>
+              <input type="date" name="to" id="filter-to">
+            </div>
+          </div>
+          <div class="filter-actions">
+            <button type="submit" class="cancel-button">Применить</button>
+            <button type="button" id="filter-reset-button" class="cancel-button">Сбросить фильтры</button>
+          </div>
+        </form>
         <div class="list-caption"><span>СПИСОК ОПЕРАЦИЙ</span><span>СНАЧАЛА НОВЫЕ</span></div>
         <div id="loading" class="loading" role="status"><span class="spinner" aria-hidden="true"></span> Загружаем операции…</div>
         <div id="transaction-list" class="transaction-list"></div>
@@ -129,7 +176,7 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-content"><strong>saldo<span>.</span></strong><span>Меньше хаоса. Больше контроля.</span><small>JS & веб-разработка · Лабораторная №8</small></div>
+    <div class="container footer-content"><strong>saldo<span>.</span></strong><span>Меньше хаоса. Больше контроля.</span><small>JS & веб-разработка · Лабораторная №10–11</small></div>
   </footer>
 </body>
 </html>

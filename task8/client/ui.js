@@ -1,4 +1,6 @@
 const form = document.querySelector('#transaction-form');
+const filtersForm = document.querySelector('#filters-form');
+const categoryForm = document.querySelector('#category-form');
 const list = document.querySelector('#transaction-list');
 const notice = document.querySelector('#notice');
 
@@ -9,7 +11,7 @@ function money(amount) {
   }).format(amount) + ' BYN';
 }
 
-function element(tag, className, text) {
+function element(tag, className, text = '') {
   const node = document.createElement(tag);
   node.className = className;
   node.textContent = text;
@@ -19,8 +21,7 @@ function element(tag, className, text) {
 export function renderSummary(transactions) {
   const total = (type) => transactions
     .filter((item) => item.type === type)
-    .reduce((sum, item) => sum + Number(item.amount), 0);
-
+    .reduce((sum, item) => sum + item.amount, 0);
   const income = total('income');
   const expense = total('expense');
   document.querySelector('#income').textContent = money(income);
@@ -35,6 +36,32 @@ export function renderCategories(categories, type, selected = '') {
     select.add(new Option(item.name, item.id));
   });
   select.value = String(selected);
+}
+
+export function renderFilterCategories(categories, selected = '') {
+  const select = filtersForm.elements.category_id;
+  select.replaceChildren(new Option('Все категории', ''));
+  categories.forEach((item) => {
+    const typeLabel = item.type === 'income' ? 'доход' : 'расход';
+    select.add(new Option(`${item.name} (${typeLabel})`, item.id));
+  });
+  select.value = String(selected);
+}
+
+export function readFilters() {
+  return {
+    type: filtersForm.elements.type.value,
+    category_id: filtersForm.elements.category_id.value,
+    from: filtersForm.elements.from.value,
+    to: filtersForm.elements.to.value
+  };
+}
+
+export function fillFilters(filters) {
+  filtersForm.elements.type.value = filters.type || '';
+  filtersForm.elements.category_id.value = filters.category_id || '';
+  filtersForm.elements.from.value = filters.from || '';
+  filtersForm.elements.to.value = filters.to || '';
 }
 
 function setFormTitle(text) {
@@ -59,18 +86,12 @@ function createAction(icon, title, action, id) {
   return button;
 }
 
-export function renderTransactions(transactions, categories) {
-  const sorted = [...transactions].sort((a, b) =>
-    b.date.localeCompare(a.date) || Number(b.id) - Number(a.id)
-  );
-
-  const cards = sorted.map((item) => {
-    const category = categories.find((c) => String(c.id) === String(item.categoryId));
-    const name = category ? category.name : 'Без категории';
+export function renderTransactions(transactions) {
+  const cards = transactions.map((item) => {
+    const name = item.category_name;
     const date = new Date(`${item.date}T12:00:00`).toLocaleDateString('ru-RU', {
       day: 'numeric', month: 'short', year: 'numeric'
     });
-
     const card = element('article', 'transaction');
     const icon = element('span', `transaction-icon ${item.type}`, item.type === 'income' ? '↙' : '↗');
     const info = element('div', 'transaction-info');
@@ -79,7 +100,7 @@ export function renderTransactions(transactions, categories) {
 
     const details = element('div', 'transaction-details');
     details.append(element('strong', `transaction-amount ${item.type}`,
-      `${item.type === 'income' ? '+' : '−'}${money(Number(item.amount))}`));
+      `${item.type === 'income' ? '+' : '−'}${money(item.amount)}`));
     details.append(element('time', 'transaction-date', date));
 
     const actions = element('div', 'transaction-actions');
@@ -99,7 +120,7 @@ export function readForm() {
   return {
     type: data.get('type'),
     amount: Number(data.get('amount')),
-    categoryId: Number(data.get('categoryId')),
+    category_id: Number(data.get('categoryId')),
     date: data.get('date'),
     comment: String(data.get('comment')).trim()
   };
@@ -107,7 +128,7 @@ export function readForm() {
 
 export function fillForm(item, categories) {
   form.querySelector(`input[name="type"][value="${item.type}"]`).checked = true;
-  renderCategories(categories, item.type, item.categoryId);
+  renderCategories(categories, item.type, item.category_id);
   form.elements.amount.value = item.amount;
   form.elements.date.value = item.date;
   form.elements.comment.value = item.comment || '';
@@ -125,9 +146,22 @@ export function resetForm(categories, date) {
   document.querySelector('#cancel-button').hidden = true;
 }
 
+export function readCategoryForm() {
+  const data = new FormData(categoryForm);
+  return { name: String(data.get('name')).trim(), type: String(data.get('type')) };
+}
+
+export function resetCategoryForm() {
+  categoryForm.reset();
+}
+
 export function setBusy(isBusy) {
   document.querySelector('#submit-button').disabled = isBusy;
+  document.querySelector('#category-submit-button').disabled = isBusy;
   document.querySelector('#loading').hidden = !isBusy;
+  filtersForm.querySelectorAll('input, select, button').forEach((control) => {
+    control.disabled = isBusy;
+  });
 }
 
 export function showNotice(message, kind = 'success', retry = false) {
